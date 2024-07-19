@@ -21,7 +21,13 @@ function Calender() {
 
   useEffect(() => {
     dispatch(getScheduledPosts(filter));
+    if (!isNaN(selected_post?.year)) {
+      setTimeout(() => {
+        document.getElementById("active-post")?.scrollIntoView({ behavior: 'smooth' });
+      }, 100)
+    }
   }, []);
+
 
   if (!scheduledPosts?.success || isLoading) {
     return (
@@ -121,11 +127,6 @@ function Calender() {
     }, 2000)
   }
 
-  if (!isNaN(selected_post?.year)) {
-    setTimeout(() => {
-      document.getElementById("active-post")?.scrollIntoView({ behavior: 'smooth' });
-    }, 100)
-  }
 
   return (
     <>

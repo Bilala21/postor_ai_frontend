@@ -54,7 +54,7 @@ const Home = () => {
         getPostPerWeek(postData, 'uploads', post.createdAt);
         getScheduledPosts(postData, 'scheduled', post.scheduled_at);
         getSuccessFullPost(postData, 'success', post.createdAt, post.status);
-        getFaildPost(postData, 'faild', post.createdAt, post.status);
+        getFaildPost(postData, 'faild', post.updatedAt, post.status);
         if (post.scheduled_at !== null && selectedPosts.length < 4) {
           setSelectedPosts((prev) => ([...prev, post]))
         }
