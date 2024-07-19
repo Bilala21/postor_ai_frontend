@@ -1,0 +1,306 @@
+import React, { useCallback, useEffect, useState } from "react";
+import {
+  Button,
+  Card,
+  CardBody,
+  CardHeader,
+  CardTitle,
+  Col,
+  Row,
+} from "reactstrap";
+import Topbar from "../components/topbar";
+import Chart from "react-apexcharts";
+import chatbot from "../assets/images/chatbot.png";
+import details from "../assets/images/details.png";
+import upgrade from "../assets/images/upgrade.png";
+import robot from "../assets/images/robot.png";
+import { Link } from "react-router-dom";
+import { getPosts } from "../apis/post";
+import { useDispatch, useSelector } from "react-redux";
+import { chartSettings } from "../utills/chart/chartSetting";
+import { faildPost, scheduledPost, successfulPost, uploadPost } from "../utills/chart/constant";
+import { getFaildPost, getPostPerWeek, getScheduledPosts, getSuccessFullPost } from "../utills/getPostPerWeek";
+import DonutChart from "../components/chart/donutChart";
+import moment from "moment";
+import { getPostDayAndTime } from "../utills/date-time-format";
+
+const Home = () => {
+  const dispatch = useDispatch();
+  const { posts } = useSelector((state) => state.posts);
+  const [selectedPosts, setSelectedPosts] = useState([])
+
+  const [chart, setChart] = useState({
+    uploadPosts: chartSettings(uploadPost),
+    scheduledPosts: chartSettings(scheduledPost),
+    successfulPosts: chartSettings(successfulPost),
+    faildPosts: chartSettings(faildPost),
+  });
+
+
+  useEffect(() => {
+    dispatch(getPosts());
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (posts.length > 0) {
+      let postData = {
+        uploads: [0, 0, 0, 0],
+        scheduled: [0, 0, 0, 0],
+        success: [0, 0, 0, 0],
+        faild: [0, 0, 0, 0],
+      }
+
+      posts.forEach((post, index) => {
+        getPostPerWeek(postData, 'uploads', post.createdAt);
+        getScheduledPosts(postData, 'scheduled', post.scheduled_at);
+        getSuccessFullPost(postData, 'success', post.createdAt, post.status);
+        getFaildPost(postData, 'faild', post.createdAt, post.status);
+        if (post.scheduled_at !== null && selectedPosts.length < 4) {
+          setSelectedPosts((prev) => ([...prev, post]))
+        }
+      });
+
+      setChart((prev) => {
+        return {
+          ...prev,
+          uploadPosts: {
+            ...prev.uploadPosts,
+            series: [{ data: postData.uploads }],
+          },
+          scheduledPosts: {
+            ...prev.scheduledPosts,
+            series: [{ data: postData.scheduled }],
+          },
+          successfulPosts: {
+            ...prev.successfulPosts,
+            series: [{ data: postData.success }],
+          },
+          faildPosts: {
+            ...prev.faildPosts,
+            series: [{ data: postData.faild }],
+          },
+        };
+      });
+
+
+    }
+  }, [posts]);
+
+  return (
+    <>
+      <div className="p-4">
+        <Topbar />
+
+        <div className="mt-5">
+          <Row>
+            <Col md={9} className="d-flex align-items-center justify-content-between mb-2">
+              <p className="home_title">Analytics</p>
+              <div className="px-2 month-filter d-flex align-items-center justify-content-center">
+                <select name="month" id="" className="bg-transparent border-0 w-100" >
+                  {
+                    moment.monthsShort().map((month, index) => (
+                      <option value={index + 1}>{month}</option>
+                    ))
+                  }
+                </select>
+              </div>
+            </Col>
+            <Col md={9}>
+              <Row>
+                <Col md={3}>
+                  <Card className="w-100 border-0 shadow">
+                    <div className="bar-chart w-100">
+                      <Chart
+                        options={chart.uploadPosts.options}
+                        series={chart.uploadPosts.series}
+                        type="bar"
+                        height={150}
+                      />
+                    </div>
+                    <p className="text-center fs-6 fw-bold">Total Uploads</p>
+                  </Card>
+                </Col>
+                <Col md={3}>
+                  <Card className="w-100 border-0 shadow">
+                    <div className="bar-chart w-100">
+                      <Chart
+                        options={chart.scheduledPosts.options}
+                        series={chart.scheduledPosts.series}
+                        type="bar"
+                        height={150}
+                      />
+                    </div>
+                    <p className="text-center fs-6 fw-bold">
+                      Scheduled Uploads
+                    </p>
+                  </Card>
+                </Col>
+                <Col md={3}>
+                  <Card className="w-100 border-0 shadow">
+                    <div className="bar-chart w-100">
+                      <Chart
+                        options={chart.successfulPosts.options}
+                        series={chart.successfulPosts.series}
+                        type="bar"
+                        height={150}
+                      />
+                    </div>
+                    <p className="text-center fs-6 fw-bold">
+                      Successful Uploads
+                    </p>
+                  </Card>
+                </Col>
+                <Col md={3}>
+                  <Card className="w-100 border-0 shadow">
+                    <div className="bar-chart w-100">
+                      <Chart
+                        options={chart.faildPosts.options}
+                        series={chart.faildPosts.series}
+                        type="bar"
+                        height={150}
+                      />
+                    </div>
+                    <p className="text-center fs-6 fw-bold">
+                      Unsuccessful Uploads
+                    </p>
+                  </Card>
+                </Col>
+              </Row>
+
+              <Row className="mt-4">
+                <Col md={7}>
+                  <Card className="shadow border-0 h-100 p-2">
+                    <CardHeader className="border-0 bg-white">
+                      <CardTitle className="fs-5 fw-bold">
+                        Create post content
+                      </CardTitle>
+                      <div className="ai-form">
+                        <form action="">
+                          <input type="text" placeholder="Let Ai to write for you" className="w-100" />
+                        </form>
+                      </div>
+                    </CardHeader>
+                    <CardBody className="d-flex justify-content-center mt-2">
+                      <Link to={"/compose"}>
+                        <Button className="post_create_btn">Generate</Button>
+                      </Link>
+                    </CardBody>
+                  </Card>
+                </Col>
+                <Col md={5}>
+                  <Card className="shadow border-0 p-1">
+                    <div className="p-3 d-flex flex-wrap justify-content-center">
+                      <CardTitle className="fs-5 fw-bold w-100 mb-4">
+                        Audience
+                      </CardTitle>
+                      <DonutChart />
+                    </div>
+                  </Card>
+                </Col>
+              </Row>
+
+              <Row className="mt-4">
+                <Col md={9}>
+                  <Card className="border-0 shadow p-3">
+                    <div className="d-flex justify-content-between">
+                      <p className="fs-4 fw-bold">Recent Content</p>
+                      <p className="fw-bold">Rating</p>
+                    </div>
+
+                    <div>
+                      <Row>
+                        <Col md={3}>
+                          <div>
+                            <img src={details} alt="" />
+                          </div>
+                        </Col>
+                        <Col md={6}>
+                          <div>
+                            <p className="details_desc">
+                              Captured in a moment of quiet grace, she sits on
+                              the edge of a chair
+                            </p>
+                          </div>
+                        </Col>
+                        <Col md={3}>
+                          <div className="text-end">+30%</div>
+                        </Col>
+                      </Row>
+
+                      <Row className="mt-3">
+                        <Col md={3}>
+                          <div>
+                            <img src={details} alt="" />
+                          </div>
+                        </Col>
+                        <Col md={6}>
+                          <div>
+                            <p className="details_desc">
+                              Captured in a moment of quiet grace, she sits on
+                              the edge of a chair
+                            </p>
+                          </div>
+                        </Col>
+                        <Col md={3}>
+                          <div className="text-end">+30%</div>
+                        </Col>
+                      </Row>
+                    </div>
+                  </Card>
+                </Col>
+                <Col md={3}>
+                  <Card className="shadow border-0 bg-white h-100">
+                    <div className="d-flex justify-content-center mt-3">
+                      <img src={chatbot} alt="" />
+                    </div>
+                    <div className="text-center">
+                      <p className="fs-6 fw-bold">Chat with AI</p>
+                      <p style={{ fontSize: "11px" }}>
+                        Chat with Ai to get suggestions regarding content
+                      </p>
+                    </div>
+                  </Card>
+                </Col>
+              </Row>
+            </Col>
+            <Col md={3}>
+              <Card className="shadow border-0 bg-white p-3">
+                <p className="fs-4 fw-semibold mb-2">Schedule</p>
+                <Row className="row-gap-3">
+                  {
+                    selectedPosts.map((post) => {
+                      return <Col md={6} className="px-2">
+                        <Link to={`/schedule/?date=${post.scheduled_at}`}
+                          className="recent-post post p-2 text-decoration-none d-block text-black-500">
+                          <p className="m-0 fs-13">{post.title.slice(0, 15)}</p>
+                          <img src="https://posteraibucket.s3.amazonaws.com/1/1719856551999-Screenshot%20%2850%29.png" alt="image" className="my-2 mx-auto w-100" />
+                          <p className="m-0 fs-13">{getPostDayAndTime(post.scheduled_at).formattedTime}</p>
+                        </Link>
+                      </Col>
+                    })
+                  }
+                </Row>
+              </Card>
+              <Card className="shadow border-0 bg-white px-3 py-4 mt-3 upgrade-to-pro">
+                <img src={upgrade} alt="image" width={142} className="mx-auto" />
+                <div className="text-center text-dark-500">
+                  <h5 className="fw-semibold fs-20 mt-3">Upgrade To Pro</h5>
+                  <p className="mx-auto fs-14 mt-2 mb-0">Upgrade to premium to get full access to all features</p>
+                </div>
+              </Card>
+              <Card className="shadow border-0 ps-3 py-2 mt-3 need-help-card flex-row">
+                <img src={robot} alt="image" width={80} height={80}/>
+                <div className="ps-2">
+                  <p className="m-0 fs-20 fw-semibold text-white">NEED HELP?</p>
+                  <p className="m-0 fs-12 text-white pe-5 pt-2">Feel free to get help form our customer care</p>
+                </div>
+              </Card>
+            </Col>
+          </Row>
+        </div>
+      </div>
+    </>
+  );
+};
+
+export default Home;

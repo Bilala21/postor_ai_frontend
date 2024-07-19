@@ -1,0 +1,105 @@
+.calender {
+  width: 1250px;
+  border-radius: 8px;
+  background: #FFF;
+  box-shadow: 0px 0px 15px 1px rgba(22, 22, 22, 0.06);
+  margin-right: auto;
+  margin-left: auto;
+  margin-top: 50px;
+  margin-bottom: 50px;
+}
+
+.calender-table {
+  height: 600px;
+  overflow: auto;
+}
+
+.calender h2 {
+  color: #333;
+  /* font-family: Inter; */
+  font-size: 20px;
+  font-style: normal;
+  /* font-weight: 600; */
+  line-height: normal;
+}
+
+.calender .calender-header {
+  position: sticky;
+  top: 0;
+  z-index: 99;
+  background: #fff;
+}
+
+
+
+.table td,
+.table th {
+  border: 1px solid rgba(22, 22, 22, 0.3);
+  border-bottom: none;
+  position: relative;
+  height: 79px;
+  vertical-align: middle;
+  max-height: 80px;
+  width: 12.5%;
+}
+.table thead th {
+  border: none;
+  background: #0d6efd;
+  height: 50px;
+  color: #fff;
+}
+thead tr th:first-child {
+  border-left: none;
+  border-bottom: 1px solid rgba(22, 22, 22, 0.3);
+  width: 100px;
+
+}
+
+tbody tr td:first-child {
+  border-left: none;
+}
+
+tbody tr td:last-child {
+  border-right: none;
+}
+
+thead tr th:last-child {
+  border-right: none;
+}
+
+.box-cell {
+  padding: 5px !important;
+}
+
+.post_cell {
+  min-height: 80px;
+  border-top: 1px solid rgba(22, 22, 22, 0.3);
+  border-bottom: 1px solid rgba(22, 22, 22, 0.3);
+  padding: 10px;
+  background: #5C30F4;
+  margin-bottom: 5px;
+  border-radius: 10px;
+}
+
+.post_cell img {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  border-radius: 10px;
+}
+
+
+
+.post-perday {
+  background: #3102d6;
+  transform: translateY(100px);
+  transition: all 300ms ease-in-out;
+}
+
+.post-perday span {
+  font-size: 12px;
+  margin-right: 5px;
+}
+
+.post_cell:hover .post-perday {
+  transform: translateY(0px);
+}
