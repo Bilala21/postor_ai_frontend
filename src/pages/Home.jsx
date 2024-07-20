@@ -15,7 +15,7 @@ import details from "../assets/images/details.png";
 import upgrade from "../assets/images/upgrade.png";
 import robot from "../assets/images/robot.png";
 import { Link } from "react-router-dom";
-import { getPosts } from "../apis/post";
+import { getPosts, getTopRatedPosts } from "../apis/post";
 import { useDispatch, useSelector } from "react-redux";
 import { chartSettings } from "../utills/chart/chartSetting";
 import { faildPost, scheduledPost, successfulPost, uploadPost } from "../utills/chart/constant";
@@ -23,10 +23,13 @@ import { getFaildPost, getPostPerWeek, getScheduledPosts, getSuccessFullPost } f
 import DonutChart from "../components/chart/donutChart";
 import moment from "moment";
 import { getPostDayAndTime } from "../utills/date-time-format";
+import { AiOutlineLike } from "react-icons/ai";
+import { FaFacebook, FaRegComment } from "react-icons/fa";
+import { PiShareFatLight } from "react-icons/pi";
 
 const Home = () => {
   const dispatch = useDispatch();
-  const { posts } = useSelector((state) => state.posts);
+  const { posts, topRatedPosts } = useSelector((state) => state.posts);
   const [selectedPosts, setSelectedPosts] = useState([])
 
   const [chart, setChart] = useState({
@@ -38,53 +41,54 @@ const Home = () => {
 
 
   useEffect(() => {
-    dispatch(getPosts());
+    dispatch(getPosts({ "month": getPostDayAndTime(new Date()).month }))
+    dispatch(getTopRatedPosts())
   }, [dispatch]);
 
   useEffect(() => {
-    if (posts.length > 0) {
-      let postData = {
-        uploads: [0, 0, 0, 0],
-        scheduled: [0, 0, 0, 0],
-        success: [0, 0, 0, 0],
-        faild: [0, 0, 0, 0],
+    let postData = {
+      uploads: [0, 0, 0, 0],
+      scheduled: [0, 0, 0, 0],
+      success: [0, 0, 0, 0],
+      faild: [0, 0, 0, 0],
+    }
+
+    posts.forEach((post, index) => {
+      getPostPerWeek(postData, 'uploads', post.createdAt);
+      getScheduledPosts(postData, 'scheduled', post.scheduled_at);
+      getSuccessFullPost(postData, 'success', post.createdAt, post.status);
+      getFaildPost(postData, 'faild', post.updatedAt, post.status);
+      if (post.scheduled_at !== null && selectedPosts.length < 4) {
+        setSelectedPosts((prev) => ([...prev, post]))
       }
+    });
 
-      posts.forEach((post, index) => {
-        getPostPerWeek(postData, 'uploads', post.createdAt);
-        getScheduledPosts(postData, 'scheduled', post.scheduled_at);
-        getSuccessFullPost(postData, 'success', post.createdAt, post.status);
-        getFaildPost(postData, 'faild', post.updatedAt, post.status);
-        if (post.scheduled_at !== null && selectedPosts.length < 4) {
-          setSelectedPosts((prev) => ([...prev, post]))
-        }
-      });
-
-      setChart((prev) => {
-        return {
-          ...prev,
-          uploadPosts: {
-            ...prev.uploadPosts,
-            series: [{ data: postData.uploads }],
-          },
-          scheduledPosts: {
-            ...prev.scheduledPosts,
-            series: [{ data: postData.scheduled }],
-          },
-          successfulPosts: {
-            ...prev.successfulPosts,
-            series: [{ data: postData.success }],
-          },
-          faildPosts: {
-            ...prev.faildPosts,
-            series: [{ data: postData.faild }],
-          },
-        };
-      });
-
-
+    setChart((prev) => {
+      return {
+        ...prev,
+        uploadPosts: {
+          ...prev.uploadPosts,
+          series: [{ data: postData.uploads }],
+        },
+        scheduledPosts: {
+          ...prev.scheduledPosts,
+          series: [{ data: postData.scheduled }],
+        },
+        successfulPosts: {
+          ...prev.successfulPosts,
+          series: [{ data: postData.success }],
+        },
+        faildPosts: {
+          ...prev.faildPosts,
+          series: [{ data: postData.faild }],
+        },
+      };
+    });
+    if (!posts.length) {
+      setSelectedPosts([])
     }
   }, [posts]);
+
 
   return (
     <>
@@ -96,15 +100,16 @@ const Home = () => {
             <Col md={9} className="d-flex align-items-center justify-content-between mb-2">
               <p className="home_title">Analytics</p>
               <div className="px-2 month-filter d-flex align-items-center justify-content-center">
-                <select name="month" id="" className="bg-transparent border-0 w-100" >
+                <select name="month" id="" className="bg-transparent border-0 w-100" onChange={(e) => dispatch(getPosts({ "month": e.target.value }))}>
                   {
                     moment.monthsShort().map((month, index) => (
-                      <option value={index + 1}>{month}</option>
+                      <option value={index + 1} selected={getPostDayAndTime(new Date()).month == (index + 1)}>{month}</option>
                     ))
                   }
                 </select>
               </div>
             </Col>
+
             <Col md={9}>
               <Row>
                 <Col md={3}>
@@ -202,50 +207,44 @@ const Home = () => {
               <Row className="mt-4">
                 <Col md={9}>
                   <Card className="border-0 shadow p-3">
-                    <div className="d-flex justify-content-between">
-                      <p className="fs-4 fw-bold">Recent Content</p>
-                      <p className="fw-bold">Rating</p>
+                    <div className="d-flex justify-content-between mb-4 fs-20 fw-semibold">
+                      <p className="m-0">Recent Content</p>
+                      <p className="m-0">Rating</p>
                     </div>
-
-                    <div>
-                      <Row>
-                        <Col md={3}>
-                          <div>
-                            <img src={details} alt="" />
+                    <Row className="gap-3">
+                      {
+                        topRatedPosts.map((post) => (
+                          <div className="d-flex gap-4">
+                            <div>
+                              <img src={post.media_url} alt="" style={{ minWidth: "90px", width: "90px", borderRadius: "8px" }} height={70} />
+                            </div>
+                            <div className="d-flex align-items-center justify-content-between w-100 text-black-500">
+                              <Col md={9}>
+                                <p className="details_desc fs-12 text-dark">
+                                  {post.title}
+                                </p>
+                                <div className="d-flex align-items-center gap-4">
+                                  <FaFacebook className="text-primary" size={20} />
+                                  <span className="d-flex align-items-center gap-1">
+                                    <AiOutlineLike size={20} color="#161616" />
+                                    <span className="text-black-500">{post.like_count}</span>
+                                  </span>
+                                  <span className="d-flex align-items-center gap-1">
+                                    <FaRegComment size={20} color="#161616" />
+                                    <span className="text-black-500">{post.comments_count}</span>
+                                  </span>
+                                  <span className="d-flex align-items-center gap-1">
+                                    <PiShareFatLight size={22} color="#161616" />
+                                    <span className="text-black-500">{post.share_count}</span>
+                                  </span>
+                                </div>
+                              </Col>
+                              <div className="text-end fs-20 text-teal-500">+{post.rating_percentage}%</div>
+                            </div>
                           </div>
-                        </Col>
-                        <Col md={6}>
-                          <div>
-                            <p className="details_desc">
-                              Captured in a moment of quiet grace, she sits on
-                              the edge of a chair
-                            </p>
-                          </div>
-                        </Col>
-                        <Col md={3}>
-                          <div className="text-end">+30%</div>
-                        </Col>
-                      </Row>
-
-                      <Row className="mt-3">
-                        <Col md={3}>
-                          <div>
-                            <img src={details} alt="" />
-                          </div>
-                        </Col>
-                        <Col md={6}>
-                          <div>
-                            <p className="details_desc">
-                              Captured in a moment of quiet grace, she sits on
-                              the edge of a chair
-                            </p>
-                          </div>
-                        </Col>
-                        <Col md={3}>
-                          <div className="text-end">+30%</div>
-                        </Col>
-                      </Row>
-                    </div>
+                        ))
+                      }
+                    </Row>
                   </Card>
                 </Col>
                 <Col md={3}>
@@ -268,7 +267,7 @@ const Home = () => {
                 <p className="fs-4 fw-semibold mb-2">Schedule</p>
                 <Row className="row-gap-3">
                   {
-                    selectedPosts.map((post) => {
+                    selectedPosts.slice(0, 4).map((post) => {
                       return <Col md={6} className="px-2">
                         <Link to={`/schedule/?date=${post.scheduled_at}`}
                           className="recent-post post p-2 text-decoration-none d-block text-black-500">
@@ -289,7 +288,7 @@ const Home = () => {
                 </div>
               </Card>
               <Card className="shadow border-0 ps-3 py-2 mt-3 need-help-card flex-row">
-                <img src={robot} alt="image" width={80} height={80}/>
+                <img src={robot} alt="image" width={80} height={80} />
                 <div className="ps-2">
                   <p className="m-0 fs-20 fw-semibold text-white">NEED HELP?</p>
                   <p className="m-0 fs-12 text-white pe-5 pt-2">Feel free to get help form our customer care</p>
@@ -298,7 +297,7 @@ const Home = () => {
             </Col>
           </Row>
         </div>
-      </div>
+      </div >
     </>
   );
 };

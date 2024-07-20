@@ -10,6 +10,13 @@
   --hard-purple: #9205F9;
   --new-purple: #5C30F4;
   --new-purplish: #8463F6;
+  --new-teal: #08BF05;
+}
+body{
+  color: #161616;
+}
+.card{
+  color: #161616;
 }
 
 .light {
@@ -20,9 +27,16 @@
 .text-black-500 {
   color: var(--black);
 }
+.text-teal-500 {
+  color: var(--new-teal);
+}
 
 .text-purple-500 {
   color: var(--hard-purple) !important;
+}
+
+.text-dark{
+  color: #000 !important;
 }
 
 .dark {
@@ -40,10 +54,10 @@
   width: 350px;
 }
 
-.fs-14 {
+body .fs-14 {
   font-size: 14px;
 }
-.fs-12 {
+body .fs-12 {
   font-size: 12px;
 }
 .fs-13 {

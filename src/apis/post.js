@@ -21,6 +21,22 @@ export const createPost = createAsyncThunk("post/create", (formData) =>
 export const getPosts = createAsyncThunk("post/get", (params = {}) =>
   request({ endpoint: `${path}${makeQP(params)}` })
 );
+// export const getTopRatedPosts = createAsyncThunk("post/get", (params = {}) =>
+//   request({ endpoint: `${path}${makeQP(params)}` })
+// );
+
+export const getTopRatedPosts = createAsyncThunk("post/top-rated", async () => {
+  const url = `${process.env.REACT_APP_BACKEND_URL}/posts/top-rated`
+  const response = await fetch(url, {
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+    },
+    method: "GET"
+  });
+  const json = await response.json();
+  return json;
+}
+);
 export const getScheduledPosts = createAsyncThunk("post/scheduled", async (filter) => {
   console.log(filter)
   const url = `${process.env.REACT_APP_BACKEND_URL}/posts/scheduled/?year=${filter.year}&month=${filter.month}`

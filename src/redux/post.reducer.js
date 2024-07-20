@@ -12,6 +12,7 @@ export const slice = createSlice({
     latestDraftedPost: {},
     posts: [],
     scheduledPosts: [],
+    topRatedPosts: [],
   },
   reducers: {
     clearError: (state) => (state.error = ""),
@@ -37,6 +38,17 @@ export const slice = createSlice({
       (state, action) => {
         console.log(action.payload)
         state.posts = action.payload.data;
+      },
+      (err) => {
+        toast.warn(err, { type: "error" });
+      }
+    );
+    createAsyncReducer(
+      builder,
+      apis.getTopRatedPosts,
+      (state, action) => {
+        console.log(action.payload)
+        state.topRatedPosts = action.payload.data;
       },
       (err) => {
         toast.warn(err, { type: "error" });

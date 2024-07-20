@@ -341,7 +341,7 @@ const Compose = ({ direction, ...args }) => {
       <div className="overflow-x-hidden">
         <Row>
           <Col md={9} className="p-5">
-            <Card className="border-0 shadow">
+            <Card className="border-0 shadow d-none">
               <div style={{ height: "100%" }}>
                 <Calendar
                   localizer={localizer}
