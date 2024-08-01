@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Button,
   Card,
@@ -11,7 +11,6 @@ import {
 import Topbar from "../components/topbar";
 import Chart from "react-apexcharts";
 import chatbot from "../assets/images/chatbot.png";
-import details from "../assets/images/details.png";
 import upgrade from "../assets/images/upgrade.png";
 import robot from "../assets/images/robot.png";
 import { Link } from "react-router-dom";

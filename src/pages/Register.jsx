@@ -40,7 +40,7 @@ const Login = () => {
     {
       type: "email",
       label: "Email",
-      placeholder: "Email or phone",
+      placeholder: "Email or phone number",
       name: "email",
       validation: {
         required: 'Email is required',
@@ -53,7 +53,7 @@ const Login = () => {
     {
       type: "password",
       label: "Password",
-      placeholder: "Enter your password",
+      placeholder: "Password (include letters and numbers)",
       name: "password",
       validation: {
         required: 'Password is required',
@@ -74,7 +74,7 @@ const Login = () => {
           </Link>
           <div className='d-flex justify-content-center align-items-center'>
             <p className='text-center fs-2 fw-bold mt-lg-5'>
-              Create , Schedule <br /> Publish
+              Create, Schedule & Publish
             </p>
           </div>
 
@@ -85,11 +85,11 @@ const Login = () => {
         </Col>
 
         <div className='register-form position-relative ms-auto d-flex justify-content-center align-items-center flex-column'>
-          <FormTemplate isSubmit={isSubmit} onSubmit={onSubmit} formFields={formFields} formTitle="Sign Up With" btnText="Sign Up" google={google} socialText="Sign Up With Google" />
+          <FormTemplate isSubmit={isSubmit} onSubmit={onSubmit} formFields={formFields} formTitle="Sign up for PosterAI" btnText="Sign Up" google={google} socialText="Sign up with Google" />
           <div className='position-relative form-bottom'>
             <Link to='/login' className='forgot-password w-100 text-left pt-2 d-block fs-14 text-decoration-none text-black-500 '>
               Already have an account? <span className='text-purple-500'>Login</span></Link>
-            <p className='fs-14 terms text-center pt-5'>
+            <p className='fs-14 terms text-center pt-5 text-black-500'>
               By signing up, you agree to our <span className='text-purple-500'>Terms of Service</span> and acknowledge our <span className='text-purple-500'>Privacy Policy</span>
             </p>
           </div>

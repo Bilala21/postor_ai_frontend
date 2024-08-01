@@ -28,7 +28,7 @@ const Login = () => {
         {
             type: "email",
             label: "Email",
-            placeholder: "abcd@gmail.com",
+            placeholder: "name@example.com",
             name: "email",
             validation: {
                 required: 'Email is required',
@@ -41,13 +41,13 @@ const Login = () => {
     ];
 
     return (
-        <div className='px-5 form-wrapper'>
-            <Link to='/' className='form-page-header px-5 pt-4'>
+        <div className='w-100 mw-100 px-5 pt-4 form-wrapper'>
+            <Link to='/'>
                 <img src={headerLogo} alt={headerLogo} width={200} />
             </Link>
 
             <div className='forgot-form position-relative m-auto d-flex justify-content-center align-items-center flex-column'>
-                <FormTemplate isSubmit={isSubmit} subHeading="Enter you Email to reset your password" onSubmit={onSubmit} formFields={formFields} formTitle="Forgot Password" btnText="Get Email" socialText="Sign In With Google" />
+                <FormTemplate isSubmit={isSubmit} subHeading="Enter your email address" onSubmit={onSubmit} formFields={formFields} formTitle="Forgot Password" btnText="Reset Password" socialText="Sign in with Google" />
             </div>
         </div>
     )

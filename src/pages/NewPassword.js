@@ -52,9 +52,9 @@ const Login = () => {
             name: "confirmPassword",
             validation: {
                 required: 'Confirm Password is required',
-               
-                validate: value =>{ 
-                    console.log(value,errors)
+
+                validate: value => {
+                    console.log(value, errors)
                     // value === password || "Passwords do not match"
                 }
             },
@@ -62,8 +62,8 @@ const Login = () => {
     ];
 
     return (
-        <div className='px-5 form-wrapper'>
-            <Link to='/' className='form-page-header px-5 pt-4'>
+        <div className='w-100 mw-100 px-5 pt-4 form-wrapper'>
+            <Link to='/'>
                 <img src={headerLogo} alt={headerLogo} width={200} />
             </Link>
 
