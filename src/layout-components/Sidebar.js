@@ -12,14 +12,14 @@ import { logoutUser } from "../apis/auth"
 import { useDispatch } from 'react-redux';
 
 const Sidebar = () => {
-
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
-    const handleLogout = (e) =>{
+    const handleLogout = (e) => {
         e.preventDefault();
         dispatch(logoutUser({ navigation: navigate }));
-    }
+    };
+
     return (
         <div className='sidebar_wrapper'>
             <div className="sidebar_logo">
@@ -27,113 +27,29 @@ const Sidebar = () => {
             </div>
 
             <div className="navigate_links">
-                <NavLink to="/home" className={({ isActive }) => `link_items ${isActive ? 'active' : ''}`}>
-                    <div className='nav_items'>
-                        <div className='mb-2 ms-3'>
-                            <BiHomeAlt className='fs-3 sidebar_icon' />
+                {[
+                    { to: "/home", icon: BiHomeAlt, label: "Home" },
+                    { to: "/compose", icon: PiNotePencilBold, label: "Compose" },
+                    { to: "/analytics", icon: MdInsertChartOutlined, label: "Analytics" },
+                    { to: "/inbox", icon: TbInbox, label: "Inbox" },
+                    { to: "/automation", icon: BsStars, label: "Automation" },
+                    { to: "/chat", icon: PiChatCircleTextBold, label: "Chat" },
+                    { to: "/mediaLibrary", icon: PiVideoBold, label: "Media Library" },
+                    { to: "/schedule", icon: BiCalendar, label: "Schedule" },
+                    { to: "/settings", icon: LuSettings, label: "Settings" },
+                ].map(({ to, icon: Icon, label }) => (
+                    <NavLink key={to} to={to} className={({ isActive }) => `link_items ${isActive ? 'active' : ''}`}>
+                        <div className='nav_items'>
+                            <Icon className='fs-3 sidebar_icon' />
+                            <p >{label}</p>
                         </div>
-                        <div className='mt-2 ms-3'>
-                            <p>Home</p>
-                        </div>
-                    </div>
-                </NavLink>
+                    </NavLink>
+                ))}
 
-                <NavLink to="/compose" className={({ isActive }) => `link_items ${isActive ? 'active' : ''}`}>
+                <NavLink to="/logout" onClick={handleLogout} className="link_items">
                     <div className='nav_items'>
-                        <div className='mb-2 ms-3'>
-                            <PiNotePencilBold className='fs-3 sidebar_icon' />
-                        </div>
-                        <div className='mt-2 ms-3'>
-                            <p>Compose</p>
-                        </div>
-                    </div>
-                </NavLink>
-
-                <NavLink to="/analytics" className={({ isActive }) => `link_items ${isActive ? 'active' : ''}`}>
-                    <div className='nav_items'>
-                        <div className='mb-2 ms-3'>
-                            <MdInsertChartOutlined className='fs-3 sidebar_icon' />
-                        </div>
-                        <div className='mt-2 ms-3'>
-                            <p>Analytics</p>
-                        </div>
-                    </div>
-                </NavLink>
-
-                <NavLink to="/inbox" className={({ isActive }) => `link_items ${isActive ? 'active' : ''}`}>
-                    <div className='nav_items'>
-                        <div className='mb-2 ms-3'>
-                            <TbInbox className='fs-3 sidebar_icon' />
-                        </div>
-                        <div className='mt-2 ms-3'>
-                            <p>Inbox</p>
-                        </div>
-                    </div>
-                </NavLink>
-
-                <NavLink to="/automation" className={({ isActive }) => `link_items ${isActive ? 'active' : ''}`}>
-                    <div className='nav_items'>
-                        <div className='mb-2 ms-3'>
-                            <BsStars className='fs-3 sidebar_icon' />
-                        </div>
-                        <div className='mt-2 ms-3'>
-                            <p>Automation</p>
-                        </div>
-                    </div>
-                </NavLink>
-
-                <NavLink to="/chat" className={({ isActive }) => `link_items ${isActive ? 'active' : ''}`}>
-                    <div className='nav_items'>
-                        <div className='mb-2 ms-3'>
-                            <PiChatCircleTextBold className='fs-3 sidebar_icon' />
-                        </div>
-                        <div className='mt-2 ms-3'>
-                            <p>Chat</p>
-                        </div>
-                    </div>
-                </NavLink>
-
-                <NavLink to="/mediaLibrary" className={({ isActive }) => `link_items ${isActive ? 'active' : ''}`}>
-                    <div className='nav_items'>
-                        <div className='mb-2 ms-3'>
-                            <PiVideoBold className='fs-3 sidebar_icon' />
-                        </div>
-                        <div className='mt-2 ms-3'>
-                            <p>Media Library</p>
-                        </div>
-                    </div>
-                </NavLink>
-
-                <NavLink to="/schedule" className={({ isActive }) => `link_items ${isActive ? 'active' : ''}`}>
-                    <div className='nav_items'>
-                        <div className='mb-2 ms-3'>
-                            <BiCalendar className='fs-3 sidebar_icon' />
-                        </div>
-                        <div className='mt-2 ms-3'>
-                            <p>Schedule</p>
-                        </div>
-                    </div>
-                </NavLink>
-
-                <NavLink to="/settings" className={({ isActive }) => `link_items ${isActive ? 'active' : ''}`}>
-                    <div className='nav_items'>
-                        <div className='mb-2 ms-3'>
-                            <LuSettings className='fs-3 sidebar_icon' />
-                        </div>
-                        <div className='mt-2 ms-3'>
-                            <p>Settings</p>
-                        </div>
-                    </div>
-                </NavLink>
-
-                <NavLink to="/logout" onClick={handleLogout} className={({ isActive }) => `link_items ${isActive ? 'active' : ''}`}>
-                    <div className='nav_items'>
-                        <div className='mb-2 ms-3'>
-                            <BiLogOut className='fs-3 sidebar_icon' />
-                        </div>
-                        <div className='mt-2 ms-3'>
-                            <p>Log Out</p>
-                        </div>
+                        <BiLogOut className='fs-3 sidebar_icon' />
+                        <p>Log Out</p>
                     </div>
                 </NavLink>
             </div>
