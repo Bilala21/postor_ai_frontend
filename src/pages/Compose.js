@@ -381,15 +381,15 @@ const Compose = ({ direction, ...args }) => {
                 )}
               </div>
             </Card>
-            <div className="mt-4 mb-4">
+            {/* <div className="mt-4 mb-4">
               <BsFilterLeft className="fs-2" />
-            </div>
+            </div> */}
             {/* {loading ? (
               <div className="d-flex justify-content-center align-items-center">
                 <div className="spinner-border" role="status"></div>
               </div>
             ) : ( */}
-            <Card className="mt-3 shadow border-0 p-3">
+            <Card className="shadow border-0 p-3"> 
               <div className="d-flex justify-content-between">
                 <div className="d-flex">
                   <div className="bg_icon_wrapper">
@@ -493,9 +493,9 @@ const Compose = ({ direction, ...args }) => {
                   <>
                     <textarea
                       id="postContent"
-                      placeholder="Postor Ai generating description for you...."
+                      placeholder="AI generated description for you"
                       name="desc"
-                      onChange={onChange}
+                      onChange={onChange} 
                       value={post.desc}
                       className="post_fields"
                     ></textarea>
