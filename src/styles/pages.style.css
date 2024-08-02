@@ -347,7 +347,7 @@ body .fs-12 {
   justify-content: center;
   align-items: center;
   background-color: #B3D2F9;
-  border-radius: 5px;
+  border-radius: 8px;
 }
 
 .hashtags_bg {
@@ -357,7 +357,7 @@ body .fs-12 {
   border-radius: 8px;
   border: 1px solid #D9D9D9;
   /* opacity: 0.5; */
-  background: #D9D9D9;
+  background: #f1f1f1;
   color: black;
   display: flex;
   justify-content: start;
@@ -384,7 +384,7 @@ body .fs-12 {
 }
 
 .hashtags_pin {
-  width: 100;
+  min-width:  200;
   height: 44px;
   /* flex-shrink: 0; */
   border-radius: 8px;
@@ -535,7 +535,7 @@ body .fs-12 {
 }
 
 .post_btn {
-  background: linear-gradient(90deg, #5C30F4 0%, #006AEB 100%);
+  background: linear-gradient(90deg, #5C30F4 0%, #7D49F0 50%, #006AEB 100%);
   border-radius: 5px;
   border: none;
   padding: 12px 64px;
@@ -546,28 +546,30 @@ body .fs-12 {
 }
 
 .upload_btn {
-  width: 100%;
-  height: 120px;
-  flex-shrink: 0;
   cursor: pointer;
+  padding: 10px;
+  border: 2px dashed #ccc;
   border-radius: 8px;
-  border: 1px solid #D9D9D9;
-  opacity: 0.5;
-  background: #D9D9D9;
+  background-color: #fff;
+  transition: background-color 0.3s;
   /* margin-bottom: 24px; */
+}
+.upload_btn:hover {
+  border: 2px dashed #e0e0e0;
 }
 
 .post_fields {
   border: 1px solid #D9D9D9;
   /* opacity: 0.5; */
-  background: #D9D9D9;
+  background: #fff;
   color: black;
+  padding: 10px;
 }
 
 .post_fields:focus {
   border: 1px solid #D9D9D9;
   /* opacity: 0.3; */
-  background: #D9D9D9;
+  background: #fff;
   color: black;
 }
 
