@@ -79,7 +79,7 @@ const Login = () => {
           </div>
 
           <div className='d-flex justify-content-center align-items-center mt-lg-5'>
-            <img src={register} alt="" className='' />
+            <img src={register} alt="" style={{height:'80%',width:'80%',objectFit:'contain'}}/>
           </div>
 
         </Col>
