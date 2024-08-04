@@ -35,6 +35,7 @@ import { getPostDayAndTime } from "../utills/date-time-format";
 import { AiOutlineLike } from "react-icons/ai";
 import { FaFacebook, FaRegComment } from "react-icons/fa";
 import { PiShareFatLight } from "react-icons/pi";
+import btnCap from "../assets/icons/capBtn.png";
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -198,15 +199,25 @@ const Home = () => {
                     <CardHeader className="border-0 bg-white">
                       <CardTitle className="fs-5 fw-bold">
                         Create post content
+                        <img
+                          src={btnCap}
+                          alt=""
+                          className="cap_icon"
+                          style={{ marginLeft: 10 }}
+                        />
                       </CardTitle>
                       <div className="ai-form">
                         <form>
-                          <input
-                            type="text"
-                            style={{ borderRadius: "10px" }}
+                          <textarea
+                            style={{
+                              borderRadius: "10px",
+                              resize: "vertical",
+                              overflow: "auto",
+                            }}
                             placeholder="Let AI craft the perfect words for you"
                             className="w-100 p-3 rounded-[10px] border border-gray-300 shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300 ease-in-out"
-                          />{" "}
+                            rows="3"
+                          ></textarea>{" "}
                         </form>
                       </div>
                     </CardHeader>
