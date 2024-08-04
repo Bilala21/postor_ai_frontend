@@ -213,6 +213,8 @@ const Home = () => {
                               borderRadius: "10px",
                               resize: "vertical",
                               overflow: "auto",
+                              maxHeight: "120px",
+                              minHeight:"120px"
                             }}
                             placeholder="Let AI craft the perfect words for you"
                             className="w-100 p-3 rounded-[10px] border border-gray-300 shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300 ease-in-out"
