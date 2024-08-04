@@ -36,9 +36,11 @@ const FormTemplate = ({
         alt={formBg}
         className="formbg position-absolute top-0 start-0 end-0 bottom-0 h-100 w-100"
       />
-      <div style={{ zIndex: 100, width: "70%", color:'black' }}>
-        <h2 className="text-center" style={{fontFamily:'sans-serif'}}>{formTitle}</h2>
-        {subHeading ? <p className="text-center fs-14" >{subHeading}</p> : null}
+      <div style={{ zIndex: 100, width: "70%", color: "black" }}>
+        <h2 className="text-center" style={{ fontFamily: "sans-serif" }}>
+          {formTitle}
+        </h2>
+        {subHeading ? <p className="text-center fs-14">{subHeading}</p> : null}
         {google ? (
           <>
             <button className="google-btn d-flex align-items-center justify-content-center px-3 border mx-auto">
@@ -54,8 +56,10 @@ const FormTemplate = ({
               className={index === formFields?.length - 1 ? null : "mb-3"}
               key={index}
             >
-              <label htmlFor={field.name} className="form-label" >
-                {field.label}
+              <label htmlFor={field.name} className="form-label">
+                <span style={{ fontWeight: "600", color: "#000" }}>
+                  {field.label}
+                </span>
               </label>
               <input
                 type={field.type}
@@ -91,9 +95,22 @@ const FormTemplate = ({
           ) : null}
           <button
             type="submit"
-            className="btn btn-primary w-100 mt-4 d-flex justify-content-center align-items-center"
+            className="btn w-100 mt-4 d-flex justify-content-center align-items-center"
+            style={{
+              background: "linear-gradient(to right, #5C30F4, #006AEB)",
+              border: "none",
+              color: "white",
+              fontWeight: "bold",
+              padding: "10px 20px",
+              borderRadius: "10px",
+              transition: "background 0.3s ease",
+            }}
           >
-            {isSubmit ? <Spinner animation="border" /> : btnText}
+            {isSubmit ? (
+              <Spinner animation="border" />
+            ) : (
+              <strong>{btnText}</strong>
+            )}
           </button>
         </form>
       </div>
