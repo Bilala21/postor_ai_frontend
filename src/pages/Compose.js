@@ -32,7 +32,7 @@ import { FaSun, FaMoon } from "react-icons/fa";
 import { useSelector, useDispatch } from "react-redux";
 import { PiShareFat, PiVideo, PiPlusLight } from "react-icons/pi";
 import { AiOutlineLike } from "react-icons/ai";
-import { IoClose } from "react-icons/io5";
+import { IoClose, IoCloseCircleOutline } from "react-icons/io5";
 import { HiDotsVertical } from "react-icons/hi";
 import { FaRegComment, FaWhatsapp } from "react-icons/fa";
 import { BsEmojiSmile, BsFilterLeft, BsThreeDots } from "react-icons/bs";
@@ -52,9 +52,11 @@ import "react-time-picker/dist/TimePicker.css";
 import { useNavigate } from "react-router-dom";
 // import Chip from '@mui/material/Chip';
 // import Stack from '@mui/material/Stack';
-import { Stack, Chip, TextField, IconButton } from "@mui/material";
+import { Stack, Chip, TextField, IconButton, Typography } from "@mui/material";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import HighlightOffIcon from "@mui/icons-material/HighlightOff";
+import { Close, CloudCircleOutlined, CloudUpload, Create, Tag, Upload } from "@mui/icons-material";
+import { BackDrop } from "../components/BackDrop";
 
 const localizer = momentLocalizer(moment);
 
@@ -389,21 +391,20 @@ const Compose = ({ direction, ...args }) => {
                 <div className="spinner-border" role="status"></div>
               </div>
             ) : ( */}
-            <Card className="shadow border-0 p-3"> 
+            <Card className="shadow border-0 p-3">
               <div className="d-flex justify-content-between">
-                <div className="d-flex">
+                <div className="d-flex" style={{ marginBottom: '10px', alignItems: 'center' }}>
                   <div className="bg_icon_wrapper">
-                    <img src={postPic} alt="" className="post_icon" />
+                    <Create />
                   </div>
 
-                  <div>
-                    <p className="ms-3">
-                      {" "}
-                      <span className="fs-5 fw-bold">
-                        Create Post Content
-                      </span>{" "}
-                      <br /> Create a high performing post
-                    </p>
+                  <div style={{ marginLeft: '15px', }}>
+                    <Typography fontWeight={600}>
+                      Post Content
+                    </Typography>
+                    <Typography style={{ color: 'grey' }}>
+                      Create a high performing post
+                    </Typography>
                   </div>
                 </div>
 
@@ -429,9 +430,9 @@ const Compose = ({ direction, ...args }) => {
               </div>
 
               <div class="text-area-container">
-                <div className="upload_btn text-center" onClick={toggleMedia}>
-                  <p className="fs-2">+</p>
-                  <span>Upload your media here</span>
+                <div onClick={toggleMedia} style={styles.uploadButton}>
+                <CloudUpload style={{ fontSize: '50px', textAlign: 'center' }} />
+                  <Typography>Upload your media here</Typography>
                 </div>
 
                 <div className="mb-3">
@@ -481,61 +482,64 @@ const Compose = ({ direction, ...args }) => {
                     value={post.title}
                     placeholder="Title"
                     className="post_fields"
+                    style={{ border: '1px solid #D9D9D9', borderRadius: '10px' }}
                   />
                   {/* {titleError && <p className="error mt-1">{titleError}</p>} */}
                 </div>
 
-                {loading ? (
-                  <div className="d-flex justify-content-center align-items-center">
-                    <div className="spinner-border" role="status"></div>
-                  </div>
-                ) : (
-                  <>
-                    <textarea
-                      id="postContent"
-                      placeholder="AI generated description for you"
-                      name="desc"
-                      onChange={onChange} 
-                      value={post.desc}
-                      className="post_fields"
-                    ></textarea>
 
-                    <div className="mb-3">
-                      <div className="mt-3 d-flex">
-                        <div className="bg_icon_wrapper">
-                          <p className="fs-4 mt-3">#</p>
-                        </div>
-                        <div className="mt-2 ms-3 fs-4 fw-bold">Hashtags</div>
+                <>
+                  <textarea
+                    id="postContent"
+                    placeholder="AI generated description for you"
+                    name="desc"
+                    onChange={onChange}
+                    value={post.desc}
+                    className="post_fields"
+                    style={{ border: '1px solid #D9D9D9', borderRadius: '10px' }}
+                  ></textarea>
+
+                  <div className="mb-3" >
+                    <div className="mt-3 d-flex" style={{ alignItems: 'center' }}>
+                      <div className="bg_icon_wrapper">
+                        <Tag />
                       </div>
 
-                      <div className="hashtags_bg mt-3 p-2">
-                        {post.hashtags ? (
-                          <>
-                            {post.hashtags.split(",").map((hashtag, index) => {
-                              return (
-                                <>
-                                  <div
-                                    className="hashtags_pin me-2 p-2"
-                                    key={index}
-                                  >
-                                    <p className="mt-3">{hashtag}</p>
-                                    <p
-                                      className="ms-1 mb-4 fs-6 fw-bold"
-                                      style={{ cursor: "pointer" }}
-                                      onClick={() => removeTags(index)}
-                                    >
-                                      x
-                                    </p>
-                                  </div>
-                                </>
-                              );
-                            })}
-                          </>
-                        ) : (
-                          ""
-                        )}
+                      <div style={{ marginLeft: '15px', }}>
+                        <Typography fontWeight={600}>
+                          Hashtags
+                        </Typography>
+                        <Typography style={{ color: 'grey' }}>
+                          Select from the hashtags you want to include in description
+                        </Typography>
                       </div>
-                      {/* <Input
+                    </div>
+
+                    <div className="hashtags_bg mt-3 p-2">
+                      {post.hashtags ? (
+                        <>
+                          {post.hashtags.split(",").map((hashtag, index) => {
+                            return (
+                              <>
+                                <div
+                                  className="hashtags_pin me-2 p-2"
+                                  key={index}
+                                  style={{ alignItems: 'center', justifyContent: 'center' }}
+                                >
+                                  <Typography style={{ paddingLeft: 10, fontSize: '14px' }}>{hashtag}</Typography>
+                                  <IconButton onClick={() => removeTags(index)}>
+                                    <IoCloseCircleOutline />
+                                  </IconButton>
+                                </div>
+                              </>
+                            );
+                          })}
+                        </>
+                      ) : (
+                        ""
+                      )}
+                    </div>
+                    {/* <Input
                       type="text"
                       name="hashtags"
                       onChange={onChange}
@@ -543,9 +547,9 @@ const Compose = ({ direction, ...args }) => {
                       placeholder="Tags"
                       className="post_fields mt-2"
                     /> */}
-                    </div>
-                  </>
-                )}
+                  </div>
+                </>
+
 
 
               </div>
@@ -652,6 +656,9 @@ const Compose = ({ direction, ...args }) => {
               >
                 <div>
                   <Row className="p-4">
+                    <Typography style={{ color: 'black', textAlign: 'center', marginBottom: 20, fontSize: '20px', fontWeight: '600' }}>
+                      Add Media to post
+                    </Typography>
                     <Col md={6} className="d-flex justify-content-center">
                       <div
                         className="upload_btns_bg"
@@ -660,12 +667,10 @@ const Compose = ({ direction, ...args }) => {
                           dispatch(getPosts());
                         }}
                       >
-                        <PiVideo className="fs-4 mb-2" />
-                        <div>
-                          <p className="text-center">
-                            Import from <br /> media library
-                          </p>
-                        </div>
+                        <PiVideo style={{ color: 'black' }} className="fs-4 mb-2" />
+                        <Typography style={{ color: 'black', textAlign: 'center' }}>
+                          Import from <br /> media library
+                        </Typography>
                       </div>
                     </Col>
                     <Col md={6} className="d-flex justify-content-center">
@@ -673,11 +678,11 @@ const Compose = ({ direction, ...args }) => {
                         className="upload_btns_bg"
                         onClick={handleIconClick}
                       >
-                        <PiPlusLight className="fs-4 mb-2" />
+                        <PiPlusLight style={{ color: 'black' }} className="fs-4 mb-2" />
                         <div>
-                          <p className="text-center">
+                          <Typography style={{ color: 'black', textAlign: 'center' }}>
                             Upload media <br /> from device
-                          </p>
+                          </Typography>
                         </div>
                       </div>
                     </Col>
@@ -686,36 +691,37 @@ const Compose = ({ direction, ...args }) => {
               </Modal>
 
 
-              <div className="mt-4 d-flex justify-content-center align-items-center">
-                {post.title && post?.status !== "draft" && (
-                  <Button
-                    outline={true}
-                    onClick={() =>
-                      postUpload({
-                        title: post.title,
-                        desc: post.desc,
-                        hashtags: post.hashtags,
-                        platforms: ["facebook"],
-                        status: "draft",
-                        files: files,
-                      })
-                    }
-                    className="me-3"
-                  >
-                    Save as Draft
-                  </Button>
-                )}
-                <Button
-                  outline={true}
-                  onClick={saveButtonCanBeEnabled(post) ? toggle : () => null}
-                  className="me-3"
-                  disabled={!saveButtonCanBeEnabled(post)}
-                >
-                  Save
-                </Button>
+              <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
                 <Button className="post_btn" onClick={getAiCaption}>
                   Generate
                 </Button>
+                <div style={{ flexDirection: 'row', display: 'flex', justifyContent: 'flex-end', alignItems: 'center', gap: 10 }}>
+                  {post.title && post?.status !== "draft" && (
+                    <Button className="post_btn"
+
+                      onClick={() =>
+                        postUpload({
+                          title: post.title,
+                          desc: post.desc,
+                          hashtags: post.hashtags,
+                          platforms: ["facebook"],
+                          status: "draft",
+                          files: files,
+                        })
+                      }
+
+                    >
+                      Save as Draft
+                    </Button>
+                  )}
+                  <Button className="publish_btn"
+
+                    onClick={saveButtonCanBeEnabled(post) ? toggle : () => null}
+                    disabled={!saveButtonCanBeEnabled(post)}
+                  >
+                    Publish
+                  </Button>
+                </div>
               </div>
 
               {/* post modal */}
@@ -962,8 +968,26 @@ const Compose = ({ direction, ...args }) => {
           </Col>
         </Row>
       </div>
+      <BackDrop open={loading} />
     </>
   );
 };
 
 export default Compose;
+
+const styles = {
+  uploadButton:
+  {
+    gap: 10,
+    justifyContent: 'center',
+    display: 'flex',
+    alignItems: 'center',
+    flexDirection: 'column',
+    width: '100%',
+    border: '1px dashed #D9D9D9',
+    height: '120px',
+    borderRadius: '10px',
+    cursor: 'pointer',
+    marginTop: 10,
+  }
+}

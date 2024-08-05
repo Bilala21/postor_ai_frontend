@@ -36,6 +36,7 @@ import { AiOutlineLike } from "react-icons/ai";
 import { FaFacebook, FaRegComment } from "react-icons/fa";
 import { PiShareFatLight } from "react-icons/pi";
 import btnCap from "../assets/icons/capBtn.png";
+import { Typography } from "@mui/material";
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -107,7 +108,7 @@ const Home = () => {
               md={9}
               className="d-flex align-items-center justify-content-between mb-2"
             >
-              <p className="home_title">Analytics</p>
+              <Typography className="home_title">Analytics</Typography>
               <div className="px-2 month-filter d-flex align-items-center justify-content-center">
                 <select
                   name="month"
@@ -143,7 +144,9 @@ const Home = () => {
                         height={150}
                       />
                     </div>
-                    <p className="text-center fs-6 fw-bold">Total Uploads</p>
+                    <Typography style={styles.analyticsCardText}>
+                      Total Uploads
+                    </Typography>
                   </Card>
                 </Col>
                 <Col md={3} sm={6} xs={12}>
@@ -156,9 +159,10 @@ const Home = () => {
                         height={150}
                       />
                     </div>
-                    <p className="text-center fs-6 fw-bold">
+
+                    <Typography style={styles.analyticsCardText}>
                       Scheduled Uploads
-                    </p>
+                    </Typography>
                   </Card>
                 </Col>
                 <Col md={3} sm={6} xs={12}>
@@ -171,9 +175,9 @@ const Home = () => {
                         height={150}
                       />
                     </div>
-                    <p className="text-center fs-6 fw-bold">
+                    <Typography style={styles.analyticsCardText}>
                       Successful Uploads
-                    </p>
+                    </Typography>
                   </Card>
                 </Col>
                 <Col md={3} sm={6} xs={12}>
@@ -186,9 +190,9 @@ const Home = () => {
                         height={150}
                       />
                     </div>
-                    <p className="text-center fs-6 fw-bold">
+                    <Typography style={styles.analyticsCardText}>
                       Unsuccessful Uploads
-                    </p>
+                    </Typography>
                   </Card>
                 </Col>
               </Row>
@@ -197,8 +201,12 @@ const Home = () => {
                 <Col md={7}>
                   <Card className="shadow border-0 h-100 p-2">
                     <CardHeader className="border-0 bg-white">
-                      <CardTitle className="fs-5 fw-bold">
-                        Create post content
+                      <CardTitle
+                        style={{ flexDirection: "row", display: "flex" }}
+                      >
+                        <Typography className="home_title">
+                          Create post content
+                        </Typography>
                         <img
                           src={btnCap}
                           alt=""
@@ -214,7 +222,7 @@ const Home = () => {
                               resize: "vertical",
                               overflow: "auto",
                               maxHeight: "120px",
-                              minHeight:"120px"
+                              minHeight: "120px",
                             }}
                             placeholder="Let AI craft the perfect words for you"
                             className="w-100 p-3 rounded-[10px] border border-gray-300 shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300 ease-in-out"
@@ -233,9 +241,10 @@ const Home = () => {
                 <Col md={5}>
                   <Card className="shadow border-0 p-1">
                     <div className="p-3 d-flex flex-wrap justify-content-center">
-                      <CardTitle className="fs-5 fw-bold w-100 mb-4">
-                        Audience
+                      <CardTitle className="w-100 mb-4">
+                        <Typography className="home_title">Audience</Typography>
                       </CardTitle>
+
                       <DonutChart />
                     </div>
                   </Card>
@@ -246,7 +255,9 @@ const Home = () => {
                 <Col md={9}>
                   <Card className="border-0 shadow p-3">
                     <div className="d-flex justify-content-between mb-4 fs-20 fw-semibold">
-                      <p className="m-0">Recent Content</p>
+                      <Typography className="home_title">
+                        Recent Content
+                      </Typography>
                       <p className="m-0">Rating</p>
                     </div>
                     <Row className="gap-3">
@@ -307,7 +318,7 @@ const Home = () => {
             </Col>
             <Col md={3}>
               <Card className="shadow border-0 bg-white p-3">
-                <p className="fs-4 fw-semibold mb-2">Schedule</p>
+                <Typography className="home_title">Schedule</Typography>
                 <Row className="row-gap-3">
                   {selectedPosts.slice(0, 4).map((post) => {
                     return (
@@ -340,29 +351,29 @@ const Home = () => {
                 />
                 <div className="text-center text-dark-500">
                   <h5 className="fw-semibold fs-20 mt-3">Upgrade To Pro</h5>
-                  <p className="mx-auto fs-14 mt-2 mb-0">
+                  <Typography className="mx-auto fs-14 mt-2 mb-0">
                     Upgrade to premium to get full access to all features
-                  </p>
+                  </Typography>
                 </div>
               </Card>
               <Card className="shadow border-0 ps-3 py-2 mt-3 need-help-card flex-row">
                 <img src={robot} alt="imag-help" width={80} height={80} />
                 <div className="ps-2">
-                  <p className="m-0 fs-20 fw-semibold text-white">
+                  <Typography className="m-0 fs-20 fw-semibold text-white">
                     NEED HELP ?
-                  </p>
-                  <p className="m-0 fs-12 text-white pe-5 pt-2">
+                  </Typography>
+                  <Typography className="m-0 fs-12 text-white pe-5 pt-2">
                     Feel free to get help form our customer care
-                  </p>
+                  </Typography>
                 </div>
               </Card>
               <Card className="shadow border-0 p-2 bg-white px-3 py-4 mt-3 ">
                 <img src={chatbot} alt="" className="m-auto" />
                 <div className="text-center text-dark-500">
                   <h5 className="fw-semibold fs-20 mt-3">AI Chatbot</h5>
-                  <p className="mx-auto fs-14 mt-2 mb-0">
+                  <Typography className="mx-auto fs-14 mt-2 mb-0">
                     Chat with Ai to get suggestions regarding content
-                  </p>
+                  </Typography>
                 </div>
               </Card>
             </Col>
@@ -374,3 +385,12 @@ const Home = () => {
 };
 
 export default Home;
+
+const styles = {
+  analyticsCardText: {
+    fontWeight: 600,
+    paddingBottom: "1.2rem",
+    textAlign: "center",
+    fontSize: "14px",
+  },
+};
