@@ -6,26 +6,33 @@ import headerLogo from "../assets/images/nav-logo.png"
 import { useDispatch } from 'react-redux';
 import { loginUser } from '../apis/auth';
 import FormTemplate from '../components/form-template';
+import { toast } from 'react-toastify';
 
 const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [isSubmit, setSubmit] = useState(false);
   const [error, setError] = useState(null);
-  
+
   const onSubmit = async (data) => {
-    setSubmit(true)
-    const response = await dispatch(loginUser({ body: data, navigation: navigate }));
-    if (!response?.payload.success) {
+    try {
+      setSubmit(true)
+      const response = await dispatch(loginUser({ body: data, navigation: navigate }));
+      if (!response?.payload.success) {
+        setError(response?.payload)
+        setTimeout(() => {
+          setError(null)
+        }, 3000)
+      }
+      else {
+        navigate("/home")
+      }
+    } catch (error) {
+      toast.error("Something went wrong, please try again!")
+    } finally {
       setSubmit(false)
-      setError(response?.payload)
-      setTimeout(() => {
-        setError(null)
-      }, 3000)
     }
-    else {
-      navigate("/home")
-    }
+
   };
 
   const formFields = [

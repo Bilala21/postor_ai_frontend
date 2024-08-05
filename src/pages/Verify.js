@@ -1,15 +1,17 @@
 import React from 'react'
-import { Button, Card, CardHeader, CardTitle, Input } from 'reactstrap'
+import { Button, Card, Input } from 'reactstrap'
 import logo from "../assets/images/logo.png"
 import arrow from "../assets/icons/arrow.png"
 import { Link } from 'react-router-dom'
+import { useSelector } from 'react-redux';
 
 const Verify = () => {
+    const { registeredUser } = useSelector((state) => state.authorization);
     return (
         <>
             <div className='p-5'>
                 <div className='d-flex justify-content-center'>
-                    <img src={logo} alt="" className='main_logo'/>
+                    <img src={logo} alt="" className='main_logo' />
                 </div>
                 <div className='d-flex justify-content-center align-items-center'>
                     <Card className='border-0 shadow mt-5 card_content'>
@@ -18,7 +20,7 @@ const Verify = () => {
                                 <h4>Verify Your Email</h4>
                             </div>
                             <div className='text-center'>
-                                <p>Please enter the 6 digit code sent to your <br /> email payowi3854@rehezb.com, to continue</p>
+                                <p>Please enter the 6 digit code sent to your <br /> email {registeredUser?.email}, to continue</p>
                             </div>
 
                             <div className='d-flex justify-content-center'>
@@ -31,7 +33,10 @@ const Verify = () => {
                             </div>
 
                             <div className='d-flex justify-content-center mt-3'>
-                               <Link to="/newPassword" className='link_class'> <Button className='confirm_btn'>Confirm <span className='ms-2'><img src={arrow} alt="" className='arrow_icon'/></span></Button> </Link>
+                                <Link to="/newPassword" className='link_class'> <Button className='confirm_btn'>Confirm <span className='ms-2'><img src={arrow} alt="" className='arrow_icon' /></span></Button> </Link>
+                            </div>
+                            <div className='d-flex justify-content-center mt-3'>
+                                <Link to="/login" className='link_class'> <Button className='confirm_btn'>Skip <span className='ms-2'></span></Button> </Link>
                             </div>
                         </div>
                     </Card>

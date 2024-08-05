@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Link } from "react-router-dom";
 import formBg from "../assets/images/form-rebin.png";
-import Spinner from "react-bootstrap/Spinner";
+import { BackDrop } from "./BackDrop";
 
 const FormTemplate = ({
   isSubmit,
@@ -106,14 +106,11 @@ const FormTemplate = ({
               transition: "background 0.3s ease",
             }}
           >
-            {isSubmit ? (
-              <Spinner animation="border" />
-            ) : (
-              <strong>{btnText}</strong>
-            )}
+            <strong>{btnText}</strong>
           </button>
         </form>
       </div>
+      <BackDrop open={isSubmit} />
     </>
   );
 };

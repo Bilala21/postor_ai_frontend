@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit"
 import { createAsyncReducer } from "./helpers";
 import * as apis from "../apis/auth";
-import { toast } from "react-toastify";
+// import { toast } from "react-toastify";
 
 export const slice = createSlice({
   name: "authorization",
@@ -22,7 +22,7 @@ export const slice = createSlice({
     createAsyncReducer(builder, apis.loginUser, (state, action) => {
       state.currentUser = action.payload.data;
     }, (err) => {
-      toast.warn(err, { type: "error" })
+      // toast.warn(err, { type: "error" })
     })
     createAsyncReducer(builder, apis.forgotPasswerd, (state, action) => {
       state.currentUser = action.payload.data;
