@@ -49,7 +49,7 @@ function Calender() {
   })).reduce((acc, obj) => ({ ...acc, ...obj }), {});
 
   const organizePostsByRow = () => {
-    scheduledPosts?.data.forEach((item) => {
+    scheduledPosts?.data?.forEach((item) => {
       const { hour, meridian } = getPostDayAndTime(
         item.scheduled_at,
         "YYYY-MM-DD HH:mm:ss"
@@ -83,7 +83,7 @@ function Calender() {
         id={formattedTime == selected_post?.formattedTime ? "active-post" : ""}
       >
         <p className="m-0 fs-14 text-white">
-          {item.title.length > 20
+          {item?.title?.length > 20
             ? item.title.slice(0, 20) + "..."
             : item.title}
         </p>
@@ -119,8 +119,8 @@ function Calender() {
 
       return (
         <td key={dayIndex} className="text-center box-cell">
-          {dayPosts.length > 0 &&
-            createPost(dayPosts[0], dayPosts.length, dayPosts)}
+          {dayPosts?.length > 0 &&
+            createPost(dayPosts[0], dayPosts?.length, dayPosts)}
         </td>
       );
     });
@@ -164,7 +164,7 @@ function Calender() {
           <h2>
             Scheduled Posts{" "}
             <strong className="fs-12 fw-bold">
-              (Total Posts {scheduledPosts.data.length})
+              (Total Posts {scheduledPosts?.data?.length})
             </strong>
           </h2>
           <div className="d-flex gap-3 align-items-center">
@@ -193,7 +193,7 @@ function Calender() {
             </button>
           </div>
         </div>
-        {scheduledPosts?.data.length ? (
+        {scheduledPosts?.data?.length ? (
           <div className="calendar-table">
             <table className="table table-bordered">
               <thead>
@@ -216,7 +216,7 @@ function Calender() {
           </div>
         ) : null}
         <Modal
-          show={postPerDay.length > 0}
+          show={postPerDay?.length > 0}
           onHide={() => setPostPerDay([])}
           size="lg"
           aria-labelledby="contained-modal-title-vcenter"
@@ -229,11 +229,11 @@ function Calender() {
           </Modal.Header>
           <Modal.Body>
             <div className="row post-row">
-              {postPerDay.map((item) => (
+              {postPerDay?.map((item) => (
                 <div
-                  key={item.scheduled_at}
+                  key={item?.scheduled_at}
                   className={
-                    postPerDay.length === 1
+                    postPerDay?.length === 1
                       ? "col-md-12 overflow-hidden p-2"
                       : "col-md-4 py-1 px-2"
                   }
@@ -260,7 +260,7 @@ function Calender() {
           </Modal.Body>
         </Modal>
       </div>
-      {!scheduledPosts?.data.length ? (
+      {!scheduledPosts?.data?.length ? (
         <div className="not-found fs-4 text-center">No record found</div>
       ) : null}
       <BackDrop open={!scheduledPosts?.success || isLoading} />

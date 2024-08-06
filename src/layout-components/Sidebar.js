@@ -22,7 +22,7 @@ const Sidebar = () => {
 
     return (
         <div className='sidebar_wrapper'>
-            <div className="sidebar_logo">
+            <div className="sidebar_logo" onClick={()=>navigate('/home')}>
                 <img src={logo} alt="Logo" className='logo_style' />
             </div>
 
