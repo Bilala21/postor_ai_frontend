@@ -566,7 +566,7 @@ const Compose = ({ direction, ...args }) => {
               >
                 <div className='p-4'>
                   <Row>
-                    <Col md={7}>
+                    <Col md={9}>
                       <div className='d-flex justify-content-between'>
                         <p className='fs-4 fw-bold'>Media Library</p>
                         <div className='search-container'>
@@ -581,7 +581,7 @@ const Compose = ({ direction, ...args }) => {
                         </div>
                       </div>
                     </Col>
-                    <Col md={5}>
+                    <Col md={3}>
                       <div className='d-flex justify-content-end'>
                         <form>
                           <select name="fields" id="opts" onChange={(e) => setSelectedType(e.target.value)}>
