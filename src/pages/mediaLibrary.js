@@ -4,6 +4,7 @@ import { Col, Input, Row } from 'reactstrap'
 import upload from "../assets/images/upload.png";
 
 import "../styles/pages.style.css"
+import { Typography } from '@mui/material';
 
 const MediaLibrary = ({ direction, ...args }) => {
   const { currentPost, loading, posts } = useSelector((state) => state.posts);
@@ -43,13 +44,13 @@ const MediaLibrary = ({ direction, ...args }) => {
     <>
       <div className='p-4'>
         <Row>
-          <Col md={7}>
-            <div className='d-flex justify-content-between'>
-              <p className='fs-4 fw-bold'>Media Library</p>
+          <Col md={9}>
+            <div style={{ display: "flex", flexDirection: 'row', gap: 20 }}>
+              <Typography className='fs-4 fw-bold'>Media Library</Typography>
               <div className='search-container'>
                 <Input
                   type="text"
-                  placeholder="search"
+                  placeholder="Search"
                   className="media_search"
                   value={searchFilter}
                   onChange={(e) => setSearchFilter(e.target.value)}
@@ -58,7 +59,7 @@ const MediaLibrary = ({ direction, ...args }) => {
               </div>
             </div>
           </Col>
-          <Col md={5}>
+          <Col md={3}>
             <div className='d-flex justify-content-end'>
               <form>
                 <select name="fields" id="opts" onChange={(e) => setSelectedType(e.target.value)}>

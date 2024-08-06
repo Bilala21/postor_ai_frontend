@@ -130,10 +130,9 @@ function Calender() {
 
   return (
     <>
-      <Topbar />
       <div className="calender">
         <div className='d-flex justify-content-between align-items-center py-3 px-5 calender-header'>
-          <h2>Scheduled Posts <span className='fs-12'>(Total Posts {scheduledPosts.data.length})</span></h2>
+          <h2>Scheduled Posts <strong className='fs-12 fw-bold'>(Total Posts {scheduledPosts.data.length})</strong></h2>
           <div className='d-flex gap-3 align-items-center'>
             <select name="month" onChange={handleChange}>
               <option value="" selected>{monthNames[filter.month - 1].name}</option>
