@@ -431,7 +431,7 @@ const Compose = ({ direction, ...args }) => {
 
               <div class="text-area-container">
                 <div onClick={toggleMedia} style={styles.uploadButton}>
-                <CloudUpload style={{ fontSize: '50px', textAlign: 'center' }} />
+                  <CloudUpload style={{ fontSize: '50px', textAlign: 'center' }} />
                   <Typography>Upload your media here</Typography>
                 </div>
 
@@ -744,15 +744,15 @@ const Compose = ({ direction, ...args }) => {
                   </Col>
                   <Col md={8}>
                     <div className="content_div p-3">
-                      <div>
-                        <h3 className="titles">{post.title}</h3>
-                      </div>
+
+                      <Typography variant="h4" style={{ color: 'black' }}>{post.title}</Typography>
+
 
                       <div className="desc_container">
-                        <p>{post.desc}</p>
+                        <Typography>{post.desc}</Typography>
                       </div>
                       <div>
-                        <p className="mt-5 hashss">{(post.hashtags).replace(/,/g, ' ')}</p>
+                        <Typography className="mt-5 hashss">{(post.hashtags).replace(/,/g, ' ')}</Typography>
                       </div>
                     </div>
                   </Col>
