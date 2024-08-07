@@ -9,6 +9,8 @@ import twt from "../assets/icons/twitter.png"
 import you from "../assets/icons/youtube.png"
 import linked from "../assets/icons/linkedIn.png"
 import ref from "../assets/icons/reff.png"
+import { Add } from '@mui/icons-material';
+import { Typography } from '@mui/material';
 
 
 const Accounts = (args) => {
@@ -47,11 +49,11 @@ const Accounts = (args) => {
               <div>
                 <Card className='border-0 shadow acc_card'>
                   <div className='p-5'>
-                    <h3 className='mt-5'>Link Social Media</h3>
-                    <p>Add your social media account</p>
+                    <h3 className='mt-5'>Connect with Postor.AI</h3>
+                    <Typography>Add your social media accounts</Typography>
 
                     <div>
-                      <Button className='fs-5 add_account_btn mt-5' onClick={toggle}>+ <br /> <span>Add account</span> </Button>
+                      <Button className='fs-5 add_account_btn mt-5' onClick={toggle}><Add /> <span>Add account</span> </Button>
                     </div>
 
                     <div className='mt-5'>
@@ -62,27 +64,27 @@ const Accounts = (args) => {
 
                 <Modal isOpen={modal} toggle={toggle} {...args} centered="true">
                   <div className='p-4'>
-                    
-                      <Button className='d-flex justify-content-center align-items-center bg-white text-black border-0 mb-2' onClick={redirectToInstagramLogin}>
-                        <img src={insta} alt="" style={{ height: "32px", width: "32px" }} />
-                        <p className='fs-5 ms-2 mt-3'>Instagram</p>
-                      </Button>
 
-                      <Button className='d-flex justify-content-center align-items-center bg-white text-black border-0 mb-2'>
-                        <img src={twt} alt="" style={{ height: "32px", width: "32px" }} />
-                        <p className='fs-5 ms-2 mt-3'>X</p>
-                      </Button>
+                    <Button className='d-flex justify-content-center align-items-center bg-white text-black border-0 mb-2' onClick={redirectToInstagramLogin}>
+                      <img src={insta} alt="" style={{ height: "32px", width: "32px" }} />
+                      <p className='fs-5 ms-2 mt-3'>Instagram</p>
+                    </Button>
 
-                      <Button className='d-flex justify-content-center align-items-center bg-white text-black border-0 mb-2'>
-                        <img src={you} alt="" style={{ height: "32px", width: "32px" }} />
-                        <p className='fs-5 ms-2 mt-3'>YouTube</p>
-                      </Button>
+                    <Button className='d-flex justify-content-center align-items-center bg-white text-black border-0 mb-2'>
+                      <img src={twt} alt="" style={{ height: "32px", width: "32px" }} />
+                      <p className='fs-5 ms-2 mt-3'>X</p>
+                    </Button>
 
-                      <Button className='d-flex justify-content-center align-items-center bg-white text-black border-0 mb-2'>
-                        <img src={linked} alt="" style={{ height: "32px", width: "32px" }} />
-                        <p className='fs-5 ms-2 mt-3'>LinkedIn</p>
-                      </Button>
-                    
+                    <Button className='d-flex justify-content-center align-items-center bg-white text-black border-0 mb-2'>
+                      <img src={you} alt="" style={{ height: "32px", width: "32px" }} />
+                      <p className='fs-5 ms-2 mt-3'>YouTube</p>
+                    </Button>
+
+                    <Button className='d-flex justify-content-center align-items-center bg-white text-black border-0 mb-2'>
+                      <img src={linked} alt="" style={{ height: "32px", width: "32px" }} />
+                      <p className='fs-5 ms-2 mt-3'>LinkedIn</p>
+                    </Button>
+
                   </div>
                   {/* <Row className='p-5'>
                     <Col md={6} className="d-flex justify-content-center">
