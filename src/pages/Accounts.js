@@ -11,7 +11,7 @@ import linked from "../assets/icons/linkedIn.png"
 import ref from "../assets/icons/reff.png"
 import { Add } from '@mui/icons-material';
 import { Typography } from '@mui/material';
-
+import { GoogleLogin } from '@react-oauth/google';
 
 const Accounts = (args) => {
 
@@ -24,9 +24,15 @@ const Accounts = (args) => {
 
   const toggle = () => setModal(!modal);
 
-  const redirectToInstagramLogin = () => {
+  const redirectToInstagramLogin = (response) => {
     window.location.href = authUrl;
     console.log("authUrl", authUrl)
+  }
+  const responseMessage = (response) => {
+    console.log("Google Login response:", response)
+  }
+  const errorMessage = () => {
+    console.log("Google Login Error:")
   }
   return (
     <>
@@ -63,27 +69,50 @@ const Accounts = (args) => {
                 </Card>
 
                 <Modal isOpen={modal} toggle={toggle} {...args} centered="true">
-                  <div className='p-4'>
+                  <div style={{ padding: 20 }}>
+                    <Typography variant='h6' textAlign={'center'} fontWeight={"600"}>Connect your social media accounts to unlock exclusive Postor.ai features</Typography>
 
-                    <Button className='d-flex justify-content-center align-items-center bg-white text-black border-0 mb-2' onClick={redirectToInstagramLogin}>
-                      <img src={insta} alt="" style={{ height: "32px", width: "32px" }} />
-                      <p className='fs-5 ms-2 mt-3'>Instagram</p>
-                    </Button>
+                    <div style={styles.rowView}>
+                      <div style={styles.subRowView}>
+                        <img src={fb} alt="" style={styles.icon} />
+                        <Typography>Facebook</Typography>
+                      </div>
+                      {/* Add Login Button here */}
+                    </div>
 
-                    <Button className='d-flex justify-content-center align-items-center bg-white text-black border-0 mb-2'>
-                      <img src={twt} alt="" style={{ height: "32px", width: "32px" }} />
-                      <p className='fs-5 ms-2 mt-3'>X</p>
-                    </Button>
+                    <div style={styles.rowView} onClick={redirectToInstagramLogin}>
+                      <div style={styles.subRowView}>
+                        <img src={insta} alt="" style={styles.icon} />
+                        <Typography>Instagram</Typography>
+                      </div>
+                      {/* Add Login Button here */}
 
-                    <Button className='d-flex justify-content-center align-items-center bg-white text-black border-0 mb-2'>
-                      <img src={you} alt="" style={{ height: "32px", width: "32px" }} />
-                      <p className='fs-5 ms-2 mt-3'>YouTube</p>
-                    </Button>
+                    </div>
 
-                    <Button className='d-flex justify-content-center align-items-center bg-white text-black border-0 mb-2'>
-                      <img src={linked} alt="" style={{ height: "32px", width: "32px" }} />
-                      <p className='fs-5 ms-2 mt-3'>LinkedIn</p>
-                    </Button>
+
+                    <div style={styles.rowView}>
+                      <div style={styles.subRowView}>
+                        <img src={twt} alt="" style={styles.icon} />
+                        <Typography>X,formally Twitter</Typography>
+                      </div>
+                      {/* Add Login Button here */}
+                    </div>
+
+                    <div style={styles.rowView}>
+                      <div style={styles.subRowView}>
+                        <img src={you} alt="" style={styles.icon} />
+                        <Typography>YouTube</Typography>
+                      </div>
+                      <GoogleLogin onSuccess={responseMessage} onError={errorMessage} />
+                    </div>
+
+                    <div style={styles.rowView}>
+                      <div style={styles.subRowView}>
+                        <img src={linked} alt="" style={styles.icon} />
+                        <Typography>LinkedIn</Typography>
+                      </div>
+                      {/* Add Login Button here */}
+                    </div>
 
                   </div>
                   {/* <Row className='p-5'>
@@ -191,3 +220,17 @@ const Accounts = (args) => {
 }
 
 export default Accounts
+
+const styles = {
+  rowView: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    display: 'flex',
+    justifyContent: 'space-between',
+    marginTop: 20,
+    marginBottom: 20,
+  },
+  icon: { height: "32px", width: "32px" },
+  subRowView:
+    { flexDirection: 'row', alignItems: 'center', display: 'flex', gap: 10 }
+}
