@@ -8,6 +8,7 @@ import insta from "../assets/icons/insta.png"
 import twt from "../assets/icons/twitter.png"
 import you from "../assets/icons/youtube.png"
 import linked from "../assets/icons/linkedIn.png"
+import tiktok from "../assets/icons/tiktok.png"
 import ref from "../assets/icons/reff.png"
 import { Add } from '@mui/icons-material';
 import { Typography } from '@mui/material';
@@ -55,7 +56,7 @@ const Accounts = (args) => {
               <div>
                 <Card className='border-0 shadow acc_card'>
                   <div className='p-5'>
-                    <h3 className='mt-5'>Connect with Postor.AI</h3>
+                    <Typography className='mt-5' variant='h4'>Connect with Postor.AI</Typography>
                     <Typography>Add your social media accounts</Typography>
 
                     <div>
@@ -108,8 +109,8 @@ const Accounts = (args) => {
 
                     <div style={styles.rowView}>
                       <div style={styles.subRowView}>
-                        <img src={linked} alt="" style={styles.icon} />
-                        <Typography>LinkedIn</Typography>
+                        <img src={tiktok} alt="" style={styles.icon} />
+                        <Typography>TikTok</Typography>
                       </div>
                       {/* Add Login Button here */}
                     </div>
@@ -230,7 +231,7 @@ const styles = {
     marginTop: 20,
     marginBottom: 20,
   },
-  icon: { height: "32px", width: "32px" },
+  icon: { height: "32px", },
   subRowView:
     { flexDirection: 'row', alignItems: 'center', display: 'flex', gap: 10 }
 }
